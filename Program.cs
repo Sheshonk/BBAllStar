@@ -3,8 +3,8 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RestSharp;
 
-string leagueName = "forged-in-blood---season-v-dancing-with-vampires";
-string divisionName = "15965";
+string leagueName = "forged-in-blood---season-vi---when-in-gnome";
+string divisionName = "20125";
 
 //general setup
 var c = new RestClient("https://tourplay.net/api");
@@ -121,10 +121,11 @@ Console.WriteLine("fin");
 List<string> ParseStatUps(JToken jToken, string stat, List<string> skillUps)
 {
     int diff = (int)jToken[stat] - (int)jToken["lineUpMaster"][stat];
+    if (stat == "ag" || stat == "pa")
+        diff = diff * -1;
+
     if (diff > 0)
         skillUps.Add($"{stat.ToUpper()}+{diff}");
-    else if (diff < 0)
-        skillUps.Add($"{stat.ToUpper()}-{diff}");
 
     return skillUps;
 }
